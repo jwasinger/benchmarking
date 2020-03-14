@@ -5,8 +5,8 @@
 
 
 # result output paths should be in mounted docker volumes
-CSV_NATIVE_RESULTS=/testresults/native_benchmarks.csv
-CSV_WASM_RESULTS=/testresults/standalone_wasm_results.csv
+CSV_NATIVE_RESULTS=/benchmark_results_data/native_benchmarks.csv
+CSV_WASM_RESULTS=/benchmark_results_data/standalone_wasm_results.csv
 
 # benchnativerust_prepwasm.py will use rust code templates and input vectors to
 # prepare standalone wasm files and native rust executables
@@ -19,6 +19,10 @@ WASM_FILE_DIR=/wasmfiles
 # files in WASM_FILE_DIR will be minified, and outputted to WASM_MINIFIED_DIR
 # these files will be benchmarked in all the engines
 WASM_MINIFIED_DIR=/wasmfilesminified
+
+
+# save cpu info to a file, so we know what machine was used to run the benchmarks
+grep -E '^model name|^cpu MHz' /proc/cpuinfo > /benchmark_results_data/cpuinfo.txt
 
 
 # fill rust code templates with input vectors. compile rust code to wasm and native. benchmark native
