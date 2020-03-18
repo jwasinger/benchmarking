@@ -8,9 +8,41 @@ wasm/           - contains benchmarks for wasm modules in standalone wasm engine
 wasm-engines/   - contains benchmarks for wasm modules comparing wasm engines.
 ```
 
-## Wasm Engines
+## Run benchmarks
 
-### Generate charts using jupyter notebooks
+### Wasm Engines Benchmarks
+
+Build the docker image:
+
+    $ cd wasm-engines
+    $ docker build . -t wasm-engines
+    
+Run the docker container:
+
+    $ cd ..
+    $ docker run --privileged -v $(pwd)/wasm-engines/wasmfiles:/wasmfiles -v $(pwd)/benchmark_results_data:/benchmark_results_data --security-opt seccomp=$(pwd)/wasm-engines/dockerseccompprofile.json -it wasm-engines /bin/bash
+
+Build the wasm binaries and execute benchmarks:
+
+    root@docker# ./bench_wasm_and_native.sh
+    
+### Scout Benchmarks
+
+Build the docker image:
+
+    $ cd scout-engines
+    $ docker build . -t scout-engines
+    
+Run the docker container:
+
+    $ cd ..
+    $ docker run --privileged -v $(pwd)/benchmark_results_data:/benchmark_results_data -it scout-engines /bin/bash
+
+Run benchmarks
+
+    root@docker# python3 scout_bignum_bench.py
+
+## Generate charts using jupyter notebooks
 
 The simplest way to install jupyter notebooks and the dependencies needed to generate the chart is by using Conda:
 
@@ -37,3 +69,10 @@ $ jupyter-notebook
 ```
 A web server will be launched with the already generated charts, where you can also execute each step.
 
+## Generate charts using python script
+
+Execute the python script:
+
+    $ cd scripts
+    $ python3 generate_report.py
+    
