@@ -34,6 +34,7 @@ RUN rustup target add wasm32-unknown-unknown
 # install parity-evm
 RUN git clone --recursive --single-branch --branch evm-code-bencher https://github.com/cdetrio/parity
 RUN cd parity/evmbin && cargo build --release
+RUN mv parity /
 
 # deps required to build full parity for native precompile benchmarks
 RUN apt-get update
