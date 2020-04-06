@@ -199,8 +199,11 @@ def plotCompilerStackedThreeTests(df_benches, test_names, title='Title', native=
         df_total_times = df[['exec_time', 'compile_time']].copy()
         df_total_times['total_time'] = df_total_times['exec_time'] + df_total_times['compile_time']
         ymax = max(df_total_times[['total_time']].max()) * 1.3 # 30% larger for padding between top of bars and top of graph
-        ymin = min([x for x in df[['exec_time', 'compile_time']].min().tolist() if x > 0])
-        ymin = ymin * 0.8 # 0.8 to get a number 20% smaller, fix to make bar appear for smallest exec time
+
+        # ymin = min([x for x in df[['exec_time', 'compile_time']].min().tolist() if x > 0])
+        # ymin = ymin * 0.8 # 0.8 to get a number 20% smaller, fix to make bar appear for smallest exec time
+        # TODO don't hardcode this
+        ymin = 0.00001
         ax.set_ylim(ymin, ymax)
         ax.set_yscale("log")
         plt.ylabel("seconds (log scale)")
