@@ -177,7 +177,7 @@ def plotThreeTestsGrouped(df_benches, three_tests, title="Title"):
     plt.savefig(IMG_OUTPUT_DIR + filename + '.png', bbox_inches='tight')
 
 def plotCompilerStackedThreeTests(df_benches, test_names, title='Title', native=False):
-    filename = test_names[0]
+    filename = title.lower().replace(' ', '-') # test_names[0]
 
     if native:
         filename += '-native'
@@ -211,7 +211,7 @@ def plotCompilerStackedThreeTests(df_benches, test_names, title='Title', native=
         ax.legend(labels=["execution time", "compile time"])
 
     print(f"plotCompilerStackedThreeTests: {filename}.png")
-    plt.savefig(IMG_OUTPUT_DIR + 'wasm-compilers-' + filename + '.png', bbox_inches='tight')
+    plt.savefig(IMG_OUTPUT_DIR + filename + '.png', bbox_inches='tight')
 
 # Interpreters - Execution time
 def plotThreeTestsExecTime(df_testdata, three_names, title="Title", filter_engines=None):

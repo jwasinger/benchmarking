@@ -240,9 +240,9 @@ if __name__ == "__main__":
 
     only_plot_new = True
     if only_plot_new:
-        plotCompilerStackedThreeTests(df_compiler, blake2b_test_names)
-        plotCompilerStackedThreeTests(df_compiler, bn128_mul_test_names)
-        plotCompilerStackedThreeTests(df_compiler, bn128_pairing_test_names)
+        plotCompilerStackedThreeTests(df_compiler, blake2b_test_names, title='Wasm Compilers Blake2b')
+        plotCompilerStackedThreeTests(df_compiler, bn128_mul_test_names, title='Wasm Compilers bn128_mul')
+        plotCompilerStackedThreeTests(df_compiler, bn128_pairing_test_names, title='Wasm Compilers bn128_pairing')
         sys.exit(0)
 
 
