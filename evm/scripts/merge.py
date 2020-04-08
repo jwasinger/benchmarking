@@ -40,8 +40,12 @@ def main():
             else:
                 merged_csv_contents += evm_results[e][i] + '\n'
 
-    with open(RESULT_FILE, 'w') as bench_result_file:
-        bench_result_file.write(merged_csv_contents)
+    # hacky
+    with open (RESULT_CSV_OUTPUT_PATH + "geth_precompile_benchmarks.csv", 'r') as f:
+        merged_csv_contents += '\n'.join(f.read().splitlines()[1:])
+
+    # with open(RESULT_FILE, 'w') as bench_result_file:
+    #     bench_result_file.write(merged_csv_contents)
             
 
 if __name__ == "__main__":

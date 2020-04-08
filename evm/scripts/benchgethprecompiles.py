@@ -132,11 +132,11 @@ def saveResults(precompile_benchmarks):
         print("existing {} moved to {}".format(RESULT_CSV_FILENAME, dest_backup_path))
 
     with open(result_file, 'w', newline='') as bench_result_file:
-        fieldnames = ['test_name', 'gas', 'time']
+        fieldnames = ['engine', 'test_name', 'gas', 'time']
         writer = csv.DictWriter(bench_result_file, fieldnames=fieldnames)
         writer.writeheader()
         for test_result in precompile_benchmarks:
-            writer.writerow({"test_name" : test_result['name'], "gas" : test_result['gas'], "time" : test_result['time']})
+            writer.writerow({"engine": 'geth_native', "test_name" : test_result['name'], "gas" : test_result['gas'], "time" : test_result['time']})
 
 
 def main():

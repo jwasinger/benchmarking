@@ -26,7 +26,7 @@ RUN add-apt-repository ppa:longsleep/golang-backports && apt-get update && apt-g
 
 # install geth
 RUN go get -u -v github.com/ethereum/go-ethereum
-RUN cd /root/go/src/github.com/ethereum/go-ethereum && git pull origin master && make all
+RUN cd /root/go/src/github.com/ethereum/go-ethereum && git reset --hard 671f22be3888aa9d056e0798508c42420638cb1f && make all
 RUN ln -s /root/go/src/github.com/ethereum/go-ethereum /go-ethereum
 
 WORKDIR /

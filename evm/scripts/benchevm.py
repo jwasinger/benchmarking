@@ -127,8 +127,10 @@ def do_geth_bench(geth_cmd):
             stdoutlines.append(line.decode())  # pass bytes as is
         p.wait()
 
-    msOpRegex = "evm execution time: ([\d]+.[\d]+)ms"
-    qsOpRegex = "evm execution time: ([\d]+.[\d]+)µs"
+    import pdb; pdb.set_trace()
+
+    msOpRegex = "execution time: ([\d]+.[\d]+)ms"
+    qsOpRegex = "execution time: ([\d]+.[\d]+)µs"
     gasregex = "Gas used:\s+(\d+)"
     # maybe --benchmark_format=json is better so dont have to parse "36.775k"
     time_line = stdoutlines[0]
