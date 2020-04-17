@@ -35,6 +35,9 @@ vm_descriptors = {
     "v8-liftoff" : VMDescriptor("/engines/node/node", "--liftoff --no-wasm-tier-up /engines/node/node-timer.js {wasm_file_path}"),
     "v8-turbofan" : VMDescriptor("/engines/node/node", "--no-liftoff /engines/node/node-timer.js {wasm_file_path}"),
     "v8-interpreter" : VMDescriptor("/engines/node/node", "--wasm-interpret-all --liftoff --no-wasm-tier-up /engines/node/node-timer.js {wasm_file_path}"),
+    "node13-v8-liftoff" : VMDescriptor("/engines/node/node", "--liftoff --no-wasm-tier-up /engines/node/node-timer.js {wasm_file_path}"),
+    "node13-v8-turbofan" : VMDescriptor("/engines/node/node", "--no-liftoff /engines/node/node-timer.js {wasm_file_path}"),
+    "node13-v8-interpreter" : VMDescriptor("/engines/node/node", "--wasm-interpret-all --liftoff --no-wasm-tier-up /engines/node/node-timer.js {wasm_file_path}"),
     "wasmtime": VMDescriptor("/engines/wasmtime/target/release/wasmtime", "{wasm_file_path} --invoke=main"),
     "wavm"   : VMDescriptor("/engines/wavm-build/bin/wavm-run", "{wasm_file_path} -f {function_name}"),
     "life-polymerase" : VMDescriptor("/engines/life/life", "-polymerase -entry {function_name} {wasm_file_path}"),
@@ -49,4 +52,5 @@ vm_descriptors = {
 
     # "wasmer" : VMDescriptor("/engines/wasmer/target/release/wasmer", "run {wasm_file_path}", True),
     # we have binaryen, but calling wasm-shell -e main is not working
+
 }

@@ -55,6 +55,7 @@ for filename in *.wasm
 do
   dest="${WASM_MINIFIED_DIR}/${filename}"
   /root/sentinel-minify-tool/wasm-utils/target/debug/wasm-minify "${filename}" "$dest"
+  echo "${filename} $dest"
 done
 
 
@@ -62,4 +63,4 @@ done
 # benchmark standalone wasm files in all the engines
 
 cd /benchrunner
-python3.7 main.py --wasmdir="${WASM_MINIFIED_DIR}" --csvfile="${CSV_WASM_RESULTS}" --engines "v8-liftoff" |& tee wasm-engines-run1.log
+python3.7 main.py --wasmdir="${WASM_MINIFIED_DIR}" --csvfile="${CSV_WASM_RESULTS}" --engines "node13-v8-liftoff" |& tee wasm-engines-run1.log
