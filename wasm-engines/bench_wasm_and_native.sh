@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # first compile standalone wasm files from rust code, and benchmark native rust
 # later, benchmark the standalone wasm files in all the wasm engines
 
@@ -60,4 +62,4 @@ done
 # benchmark standalone wasm files in all the engines
 
 cd /benchrunner
-python3.7 main.py --wasmdir="${WASM_MINIFIED_DIR}" --csvfile="${CSV_WASM_RESULTS}" |& tee wasm-engines-run1.log
+python3.7 main.py --wasmdir="${WASM_MINIFIED_DIR}" --csvfile="${CSV_WASM_RESULTS}" --engines "v8-liftoff" |& tee wasm-engines-run1.log

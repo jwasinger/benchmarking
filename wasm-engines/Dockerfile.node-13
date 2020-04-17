@@ -1,0 +1,8 @@
+FROM wasm-engines-env
+
+RUN apt-get update && apt-get install -y curl
+
+RUN mkdir -p node \
+&& cd node && curl -fsSLO --compressed https://nodejs.org/download/release/latest-v13.x/node-v13.13.0-linux-x64.tar.gz \
+&& tar -xvf node-v13.13.0-linux-x64.tar.gz -C /usr/local/ --strip-components=1 --no-same-owner \
+&& ln -s /usr/local/bin/node ./node

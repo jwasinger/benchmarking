@@ -1,0 +1,71 @@
+FROM ubuntu:18.04
+
+# System deps
+RUN apt-get clean
+RUN apt-get update
+RUN apt-get install -y software-properties-common git sudo build-essential wget curl nano \
+    autoconf automake libtool llvm-6.0 make ninja-build unzip zlib1g-dev texinfo libssl-dev
+
+# Install CMake
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.16.4/cmake-3.16.4.tar.gz
+RUN tar -xzvf cmake-3.16.4.tar.gz
+RUN cd cmake-3.16.4 && ./bootstrap && make && make install
+
+# install python 2.7
+RUN apt-get install -y python2.7
+
+# install python 3.7
+RUN apt-get install -y python3.7
+RUN apt-get install -y python3-distutils
+RUN wget https://bootstrap.pypa.io/get-pip.py && python3.7 get-pip.py
+
+WORKDIR /engines
+
+# install rust
+RUN curl https://sh.rustup.rs -sSf | \
+    sh -s -- --default-toolchain stable -y && . $HOME/.cargo/env
+ENV PATH=/root/.cargo/bin:$PATH
+
+RUN rustup default 1.31.0
+
+# install python modules needed for benchmarking script
+RUN pip3 install click durationpy
+
+#RUN mkdir node
+RUN mkdir -p node
+RUN cd node && curl -fsSLO --compressed https://nodejs.org/dist/v11.10.0/node-v11.10.0-linux-x64.tar.gz
+RUN cd node && tar -xvf node-v11.10.0-linux-x64.tar.gz -C /usr/local/ --strip-components=1 --no-same-owner
+RUN cd node && ln -s /usr/local/bin/node ./node
+COPY node-timer.js ./node/node-timer.js
+
+## install dependencies for standalone wasm prep
+RUN pip3 install jinja2 pandas
+
+# rust wasm32 target for compiling wasm
+RUN rustup target add wasm32-unknown-unknown
+
+# TODO should be able to link everything below at runtime
+
+# copy benchmarking scripts
+RUN mkdir /benchrunner
+COPY project /benchrunner/project
+COPY main.py /benchrunner
+COPY wamr_aot.sh /engines/wasm-micro-runtime/
+COPY fizzy.sh /engines/fizzy/
+
+# copy scripts to generate standalone wasm modules
+RUN mkdir /benchprep
+COPY benchnativerust_prepwasm.py /benchprep
+COPY nanodurationpy.py /benchprep
+COPY rust-code /benchprep/rust-code
+COPY inputvectors /benchprep/inputvectors
+COPY benchmeteredstandalone.sh /benchprep
+RUN chmod +x /benchprep/benchmeteredstandalone.sh
+COPY bench_wasm_and_native.sh /benchprep
+RUN chmod +x /benchprep/bench_wasm_and_native.sh
+
+RUN mkdir -p /benchmark_results_data
+
+WORKDIR /benchprep
+
+CMD /bin/bash
