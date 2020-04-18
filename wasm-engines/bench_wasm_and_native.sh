@@ -64,3 +64,6 @@ done
 
 cd /benchrunner
 python3.7 main.py --wasmdir="${WASM_MINIFIED_DIR}" --csvfile="${CSV_WASM_RESULTS}" --engines "node13-v8-liftoff" |& tee wasm-engines-run1.log
+
+# TODO don't hardcode gid/uid
+chown -R 1000:1000 /benchrunner /benchprep /benchmark_results_data

@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:19.10
 
 # System deps
 RUN apt-get clean
@@ -26,7 +26,7 @@ RUN curl https://sh.rustup.rs -sSf | \
     sh -s -- --default-toolchain stable -y && . $HOME/.cargo/env
 ENV PATH=/root/.cargo/bin:$PATH
 
-RUN rustup default 1.31.0
+RUN rustup default 1.39.0
 
 # install python modules needed for benchmarking script
 RUN pip3 install click durationpy

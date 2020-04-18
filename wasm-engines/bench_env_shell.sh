@@ -1,7 +1,7 @@
 #! /bin/bash
 
 docker run --privileged \
-	-v $(pwd)/project:/benchrunner/projects \
+	-v $(pwd)/project:/benchrunner/project \
 	-v $(pwd)/main.py:/benchrunner/main.py \
 	-v $(pwd)/benchnativerust_prepwasm.py:/benchprep/benchnativerust_prepwasm.py \
 	-v $(pwd)/wasm-engines/wasmfiles:/wasmfiles \
@@ -11,4 +11,4 @@ docker run --privileged \
 	-v $(pwd)/inputvectors:/benchprep/inputvectors \
 	-v $(pwd)/benchmeteredstandalone.sh:/benchprep/benchmeteredstandalone.sh \
 	-v $(pwd)/bench_wasm_and_native.sh:/benchprep/bench_wasm_and_native.sh \
---security-opt seccomp=$(pwd)/dockerseccompprofile.json -it wasm-engines /bin/bash
+--security-opt seccomp=$(pwd)/dockerseccompprofile.json -it wasm-engines bash /benchprep/bench_wasm_and_native.sh
