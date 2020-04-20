@@ -36,6 +36,7 @@ WebAssembly.instantiate(wasmBytes, imports)
       console.log('---- wasm returns:', syncReturn);
     } catch (e) {
       console.timeEnd('run-main');
-      console.log('caught error:', e)
+      console.error('caught error:', e)
+      process.exit(-1);
     }
   });
