@@ -92,12 +92,19 @@ def do_rust_bench(benchname, input, rust_code_dir, wasm_out_dir):
 
     # compile rust code
     benchname_rust = benchname.replace("-", "_")
-    rust_native_cmd = "cargo build --release --bin {}_native".format(benchname_rust)
+    toolchain_override = ''
+
+    rust_native_cmd = "cargo {} build --release --bin {}_native".format(toolchain_override, benchname_rust)
     print("compiling rust native {}...\n{}".format(input['name'], rust_native_cmd))
     rust_process = subprocess.Popen(rust_native_cmd, cwd=filldir, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, shell=True)
-    rust_process.wait(None)
+    return_code = rust_process.wait(None)
+
     stdoutlines = [str(line, 'utf8') for line in rust_process.stdout]
     print(("").join(stdoutlines), end="")
+
+    if return_code != 0:
+        sys.exit(-1)
+
     # native binary is at ./target/release/sha1_native
     exec_path = "{}/target/release/{}_native".format(filldir, benchname_rust)
     exec_size = os.path.getsize(exec_path)
@@ -109,9 +116,13 @@ def do_rust_bench(benchname, input, rust_code_dir, wasm_out_dir):
     rust_wasm_cmd = "cargo build --release --lib --target wasm32-unknown-unknown"
     print("compiling rust wasm {}...\n{}".format(input['name'], rust_wasm_cmd))
     rust_process = subprocess.Popen(rust_wasm_cmd, cwd=filldir, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, shell=True)
-    rust_process.wait(None)
+    return_code = rust_process.wait(None)
     stdoutlines = [str(line, 'utf8') for line in rust_process.stdout]
     print(("").join(stdoutlines), end="")
+
+    if return_code != 0:
+        sys.exit(-1)
+
     # wasm is at ./target/wasm32-unknown-unkown/release/sha1_wasm.wasm
     wasmbin = "{}/target/wasm32-unknown-unknown/release/{}_wasm.wasm".format(filldir, benchname_rust)
     wasmdir = os.path.abspath(wasm_out_dir)
@@ -163,6 +174,7 @@ def main():
     rustcodes = [dI for dI in os.listdir(rust_code_dir) if os.path.isdir(os.path.join(rust_code_dir,dI))]
     #benchdirs = [dI for dI in os.listdir('./') if os.path.isdir(os.path.join('./',dI))]
     native_benchmarks = {}
+
     for benchname in rustcodes:
         if benchname in ["__pycache__"]:
             continue
@@ -186,6 +198,7 @@ def main():
 
         print("done benching: ", benchname)
 
+    import pdb; pdb.set_trace()
     print("got native_benchmarks:", native_benchmarks)
     saveResults(native_benchmarks, csv_file_path)
 

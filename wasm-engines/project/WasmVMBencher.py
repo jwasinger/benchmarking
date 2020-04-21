@@ -134,6 +134,8 @@ class WasmVMBencher:
             result_record = self.do_wasmtime_test(cmd)
         elif vm == "v8-liftoff" or vm == "v8-turbofan" or vm == "v8-interpreter":
             result_record = self.do_v8_test(cmd)
+        elif vm == "node13-v8-liftoff" or vm == "node13-v8-turbofan" or vm == "node13-v8-interpreter":
+            result_record = self.do_node13_v8_test(cmd)
         elif vm == "asmble":
             result_record = self.do_asmble_test(cmd)
         elif vm == "wagon":
@@ -251,6 +253,7 @@ class WasmVMBencher:
         }
         return self.doCompilerTest(vm_cmd, time_parse_info)
 
+    # node 11
     def do_v8_test(self, vm_cmd):
         """02/17/2019 07:14:04 PM <wasm_bencher>: /engines/node/node --wasm-interpret-all /engines/node/node-timer.js /wasmfiles/ecpairing.wasm
         args: [ '/wasmfiles/ecpairing.wasm' ]
@@ -261,6 +264,15 @@ class WasmVMBencher:
         run-main: 13406.809ms
         ---- wasm returns: undefined
         """
+        time_parse_info = {
+          'compile_line_num' : 3,
+          'exec_line_num' : 5,
+          'compile_regex': "instantiate: ([\w\.]+)",
+          'exec_regex': "run-main: ([\w\.]+)"
+        }
+        return self.doCompilerTest(vm_cmd, time_parse_info)
+
+    def do_node13_v8_test(self, vm_cmd):
         time_parse_info = {
           'compile_line_num' : 3,
           'exec_line_num' : 5,

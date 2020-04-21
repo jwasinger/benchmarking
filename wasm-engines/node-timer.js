@@ -35,8 +35,8 @@ WebAssembly.instantiate(wasmBytes, imports)
       console.timeEnd('run-main');
       console.log('---- wasm returns:', syncReturn);
     } catch (e) {
+      //TODO unless explicitly expected to trap, binaries which do so should cause an error
       console.timeEnd('run-main');
-      console.error('caught error:', e)
-      process.exit(-1);
+      console.log('caught error:', e)
     }
   });
