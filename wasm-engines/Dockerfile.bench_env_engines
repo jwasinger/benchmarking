@@ -1,0 +1,4 @@
+FROM wasm-engines/bench-env
+
+COPY install_deps.sh /
+RUN life=1 wasmi=1 wavm=1 wasmtime=1 wabt=1 wamr=1 wasm3=1 fizz=1 /install_deps.sh
