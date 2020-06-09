@@ -12,20 +12,8 @@ FROM ewasm/wasmi:1.0 as wasmi
 
 FROM ewasm/bench-build-base:1.0
 
-# install rust
-# RUN curl https://sh.rustup.rs -sSf | \
-#     sh -s -- --default-toolchain stable -y && . $HOME/.cargo/env
-# ENV PATH=/root/.cargo/bin:$PATH
-
 ## install dependencies for standalone wasm prep
 RUN pip3 install jinja2 pandas click durationpy
-
-# Install Clang 8 (needed for life -polymerase)
-# RUN apt update && apt install -y clang-8 lldb-8 lld-8
-
-# Install clang 10 (for life -polymerase)
-# RUN echo "deb http://apt.llvm.org/eoan/ llvm-toolchain-eoan-10 main\
-# deb-src http://apt.llvm.org/eoan/ llvm-toolchain-eoan-10 main" >> /etc/apt/sources.list
 
 RUN echo "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-10 main\
     deb-src http://apt.llvm.org/focal/ llvm-toolchain-focal-10 main" >> /etc/apt/sources.list
