@@ -72,10 +72,6 @@ COPY --from=wagon /wagon/cmd/wasm-run/wasm-run /engines/wagon/wasm-run
 
 # copy benchmarking scripts
 RUN mkdir /benchrunner
-COPY project /benchrunner/project
-COPY main.py /benchrunner
-COPY wamr_aot.sh /engines/wamr/
-COPY fizzy.sh /engines/fizzy/
 
 RUN mkdir /engines/node && ln -s /usr/local/bin/node /engines/node/node 
 

@@ -60,5 +60,5 @@ done
 
 echo "running benchmarks"
 cd /benchrunner
-python3.8 main.py --wasmdir="${WASM_MINIFIED_DIR}" --csvfile="${CSV_WASM_RESULTS}" |& tee wasm-engines-run1.log
+python3.8 main.py --wasmdir="${WASM_MINIFIED_DIR}" --csvfile="${CSV_WASM_RESULTS}"
 chown -R 1000:1000 /benchrunner /benchprep /benchmark_results_data
