@@ -10,7 +10,7 @@ FROM ewasm/fizzy:1.0 as fizzy
 FROM ewasm/asmble:1.0 as asmble
 FROM ewasm/wasmi:1.0 as wasmi
 
-FROM ewasm/bench-base:1.0
+FROM ewasm/bench-build-base:1.0
 
 # install rust
 # RUN curl https://sh.rustup.rs -sSf | \

@@ -1,7 +1,7 @@
 #! /bin/bash
 
 docker run --privileged \
-	-v $(pwd)/project:/benchrunner/project \
+	-v $(pwd)/fluence_bencher:/benchrunner/fluence_bencher \
 	-v $(pwd)/main.py:/benchrunner/main.py \
 	-v $(pwd)/benchnativerust_prepwasm.py:/benchprep/benchnativerust_prepwasm.py \
 	-v $(pwd)/wasmfiles:/wasmfiles \

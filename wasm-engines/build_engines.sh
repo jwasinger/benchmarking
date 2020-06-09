@@ -2,10 +2,10 @@
 
 set -e
 
-repo="jwasinger"
+repo="ewasm"
 
 # build base images
-docker build -t $repo/bench-base:1.0 -f docker/bench-base.Dockerfile .
+docker build -t $repo/bench-build-base:1.0 -f docker/bench-base.Dockerfile .
 docker build -t $repo/llvm-10:1.0 -f docker/llvm-10.Dockerfile .
 
 # build engines
